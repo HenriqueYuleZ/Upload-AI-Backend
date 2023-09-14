@@ -9,6 +9,17 @@ import { promisify } from "node:util";
 
 const pump = promisify(pipeline);
 
+export async function getVideos(app: FastifyInstance){
+    
+    app.get('/videos', async (req, res) => {
+        const video = await prisma.video.findMany();
+
+        return {
+            video
+        }
+    });
+}
+
 export async function uploadVideo(app: FastifyInstance){
     app.register(fastifyMultipart, {
         limits: {
